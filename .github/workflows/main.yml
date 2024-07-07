@@ -1,0 +1,72 @@
+name: Test and Start Projects
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r 5_rest_api/requirements.txt
+
+      - name: Run backend tests
+        run: |
+          cd backend
+          source venv/bin/activate
+          ./run_tests.sh
+
+  start-frontend-react-form:
+    runs-on: ubuntu-latest
+    needs: test-backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies and start react-form
+        run: |
+          cd frontend/react-form
+          npm install
+          npm run build
+          npm start &
+
+  start-frontend-react-layout:
+    runs-on: ubuntu-latest
+    needs: start-frontend-react-form
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies and start react-layout
+        run: |
+          cd frontend/react-layout
+          npm install
+          npm run build
+          npm start &
