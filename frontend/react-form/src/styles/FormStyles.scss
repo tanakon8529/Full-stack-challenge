@@ -1,0 +1,14 @@
+// src/styles/FormStyles.scss
+.form-component {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  .ant-form-item {
+    margin-bottom: 10px;
+  }
+  .form-buttons {
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+  }
+}
