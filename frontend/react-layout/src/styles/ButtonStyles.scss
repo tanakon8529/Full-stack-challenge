@@ -1,0 +1,19 @@
+// src/styles/ButtonStyles.scss
+.shape-button {
+    margin: 10px;
+    &.circle {
+      background-color: #ffa200;
+      border-radius: 50%;
+    }
+    &.square {
+      background-color: #6eda78;
+    }
+    &.triangle {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 35px solid #ffa200;
+    }
+  }
+  
